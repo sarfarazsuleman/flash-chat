@@ -31,7 +31,7 @@ class Conversations extends Component {
   }
 
   componentDidMount() {
-    setTimeout(_=>this.addConversation('pending'),1000);
+    setTimeout(_=>this.addConversation('pending'),15000);
   }
 
   setCurrent(current) {
