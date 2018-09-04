@@ -27,9 +27,7 @@ class Conversations extends Component {
   }
 
   componentDidMount() {
-    if(this.props.conversations.length === 0) {
-      this.props.addConversation(Randomizer.getName()).then(_=>this.setState({current:0}));
-    }
+    setTimeout(_=>addConversation('pending'),15000);
   }
 
   setCurrent(current) {
