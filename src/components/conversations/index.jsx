@@ -1,7 +1,7 @@
 /**
  * @namespace components/conversations
  *
- * @exports (default) Conversations
+ * @export (default) Conversations
  */
 
 import React, { Component } from 'react';
