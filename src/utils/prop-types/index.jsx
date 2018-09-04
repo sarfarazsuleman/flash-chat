@@ -16,7 +16,7 @@ const conversation = PropTypes.shape({
   name: PropTypes.string.isRequired,
   status:PropTypes.oneOf(['pending', 'active']).isRequired,
   chats: PropTypes.arrayOf(chat),
-});
+}).isRequired;
 
 const input = {
   name: PropTypes.PropTypes.oneOfType([

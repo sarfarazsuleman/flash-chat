@@ -36,7 +36,7 @@ class ConversationView extends Component {
 
     return (
       <div className="conversation-view">
-        <Chats />
+        <Chats chats={this.props.conversation.chats} />
 
         <form onSubmit={this.handleSubmit}>
           <FormInput

@@ -7,6 +7,9 @@
 import { combineReducers } from 'redux'
 import {routerReducer} from 'react-router-redux';
 
+import ConversationsModule from 'components/conversations/module';
+
 export default combineReducers({
-  router: routerReducer
+  conversations: ConversationsModule,
+  router: routerReducer,
 })
