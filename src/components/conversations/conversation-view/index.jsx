@@ -18,7 +18,8 @@ class ConversationView extends Component {
     super(props);
 
     this.state = {
-      message: ''
+      message: '',
+      submitting: false,
     }
 
     this.handleMessage = this.handleMessage.bind(this);
@@ -32,7 +33,16 @@ class ConversationView extends Component {
   handleSubmit(e) {
     e.preventDefault();
 
-    this.props.addChat(this.props.idx, this.state.message, 'sent').then(_=>this.setState({message:''}))
+    if(this.state.message === '' || this.state.submitting) {
+      return;
+    }
+
+    let message = this.state.message;
+    this.setState({message:'', submitting:true},()=> {
+      this.props.addChat(this.props.idx, message).then(_=>this.setState({submitting:false}));
+    })
+
+    
   }
 
   render() {

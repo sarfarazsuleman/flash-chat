@@ -4,8 +4,17 @@
  * @export (default) Randomizer
  */
 
-const randomBetween = (start, finish) => {
-  return Math.floor(Math.random() * finish) + start;
+const getRandom = (collection, start=null, finish=null) => {
+  if(start === null) {
+    start = 0;
+  }
+  if(finish === null) {
+    finish = collection.length;
+  }
+
+  let randomIdx = Math.floor(Math.random() * finish) + start;
+
+  return collection[randomIdx];
 }
 
 class Randomizer {
@@ -18,7 +27,20 @@ class Randomizer {
       'Alberta Gator',
     ];
 
-    return names[randomBetween(0,names.length)];
+    return getRandom(names);
+  }
+
+  static getMessage() {
+    let messages = [
+      'hi there',
+      'howdy',
+      'you are right',
+      'why?',
+      'okay',
+      'I like that'
+    ]
+
+    return getRandom(messages);
   }
 }
 

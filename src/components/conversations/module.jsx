@@ -6,6 +6,8 @@
  * @export (default) [reducer function]
  */
 
+import Randomiser from 'utils/randomizer';
+
 export const CHAT_CONVERSATION_ADD = 'CHAT_CONVERSATION_ADD';
 export const CHAT_MESSAGE_ADD = 'CHAT_MESSAGE_ADD';
 
@@ -16,7 +18,7 @@ const initialState = {
 export default (state = initialState, action) => {
 
   let conversations = state.conversations;
-  
+
   switch(action.type) {
     case CHAT_CONVERSATION_ADD:
       conversations.push(action.payload);
@@ -62,14 +64,21 @@ export const addConversation = (name, status='pending', chats=[]) => {
 
 }
 
-export const addChat = (idx, message, direction) => {
+export const addChat = (idx, message) => {
 
   return dispatch => {
 
     let chat = {
       message,
-      direction,
+      direction:'sent',
       timestamp:'timestamp'
+    }
+
+    let reply = {
+      message: Randomiser.getMessage(),
+      direction: 'received',
+      timestamp:'timestamp'
+
     }
 
     const PromiseFN = (resolve, reject) => {
@@ -77,6 +86,12 @@ export const addChat = (idx, message, direction) => {
         type: CHAT_MESSAGE_ADD,
         idx,
         payload: chat
+      });
+
+      dispatch({
+        type: CHAT_MESSAGE_ADD,
+        idx,
+        payload: reply
       });
       resolve();
     }
