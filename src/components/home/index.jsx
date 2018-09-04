@@ -4,6 +4,35 @@
  * @default [Component]
  */
 
-import React from 'react';
+import React, { Component } from 'react';
 
-export default _ => <div>Hello World</div>
+import Conversations from 'components/conversations';
+
+class Home extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      ready: false
+    }
+  }
+
+  componentDidMount() {
+    this.setState({ready:true})
+  }
+
+  render(){
+    let result = null;
+
+    if(this.state.ready) {
+      result = (
+        <Conversations />
+      );
+    }
+
+    return (<div className="app">{result}</div>);
+  }
+}
+
+export default Home;
