@@ -45,6 +45,7 @@ class Conversations extends Component {
     return (
       <div className="conversations">
 
+        <h1>Conversations</h1>
         <ConversationList
           conversations={this.props.conversations} 
           current={this.state.current}
