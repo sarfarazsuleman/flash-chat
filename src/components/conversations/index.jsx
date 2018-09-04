@@ -6,6 +6,7 @@
 
 import React, { Component } from 'react';
 import ConversationView from 'components/conversations/conversation-view';
+import ConversationList from 'components/conversations/conversation-list';
 import Randomizer from 'utils/randomizer';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -18,7 +19,11 @@ class Conversations extends Component {
 
     this.state = {
       current: null,
+      adding: false,
     }
+
+    this.setCurrent = this.setCurrent.bind(this);
+    this.addConversation = this.addConversation.bind(this);
   }
 
   componentDidMount() {
@@ -27,14 +32,36 @@ class Conversations extends Component {
     }
   }
 
+  setCurrent(current) {
+    this.setState({current})
+  }
+
+  addConversation() {
+    this.setState({adding: true}, _=> {
+      this.props.addConversation(Randomizer.getName(),'active').then(_=>this.setState({adding:false}));
+    })
+    
+  }
+
   render() {
     return (
       <div className="conversations">
+
+        <ConversationList
+          conversations={this.props.conversations} 
+          current={this.state.current}
+          setCurrent={this.setCurrent}
+          addConversation={this.addConversation}
+        />
+
         {(this.state.current !== null)?(
-          <ConversationView 
-            conversation={this.props.conversations[this.state.current]}
-            idx={this.state.current}
-          />
+          (this.props.conversations[this.state.current].status === 'pending')?('awaiting approval'
+          ):(
+            <ConversationView 
+              conversation={this.props.conversations[this.state.current]}
+              idx={this.state.current}
+            />
+          )
         ):null}
       </div>
     )
