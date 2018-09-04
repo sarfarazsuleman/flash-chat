@@ -6,45 +6,48 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'utils/prop-types';
-import Chat from 'components/conversations/chat';
+import Chats from 'components/conversations/chats';
+import FormInput from 'components/forms/input';
 
 class ConversationView extends Component {
-  
+
   constructor(props) {
     super(props);
 
-    this.scrollToBottom = this.scrollToBottom.bind(this);
-  }
-
-  scrollToBottom() {
-    if(this.pageEnd === undefined) {
-      return;
+    this.state = {
+      message: ''
     }
-    this.pageEnd.scrollIntoView({ behavior: "smooth" });
+
+    this.handleMessage = this.handleMessage.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentDidMount() {
-    //Give it some delay to avoid race conditions
-    setTimeout(this.scrollToBottom,1000);
+  handleMessage(name, value) {
+    this.setState({message: value});
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+
+    console.log('submitting...');
   }
 
   render() {
-    const renderChats = () => {
-      if(this.props.conversation && this.props.conversation.chats) {
-        return this.props.conversation.chats.map((c,idx) => {
-          return (<Chat chat={c} key={idx} />)
-        })
-      }
-
-      return null;
-    }
 
     return (
       <div className="conversation-view">
+        <Chats />
 
-        {renderChats()}
-
-        <div ref={(el) => { this.pageEnd = el; }}></div>
+        <form onSubmit={this.handleSubmit}>
+          <FormInput
+            type="text"
+            name="message"
+            placeholder="write something..."
+            changeHandle={this.handleMessage}
+            value={this.state.message}
+           />
+          <button name="submit" onClick={this.handleSubmit}>+Send</button>
+        </form>
       </div>
     )
   }
