@@ -49,6 +49,8 @@ class ConversationView extends Component {
 
     return (
       <div className="conversation-view">
+        <hr />
+        <h1>Conversation with {this.props.conversation.name}</h1>
         <Chats chats={this.props.conversation.chats} />
 
         <form onSubmit={this.handleSubmit}>

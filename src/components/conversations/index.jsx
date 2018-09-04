@@ -36,9 +36,9 @@ class Conversations extends Component {
     this.setState({current})
   }
 
-  addConversation() {
+  addConversation(status='active') {
     this.setState({adding: true}, _=> {
-      this.props.addConversation(Randomizer.getName(),'active').then(_=>this.setState({adding:false}));
+      this.props.addConversation(Randomizer.getName(),status).then(_=>this.setState({adding:false}));
     })
     
   }
