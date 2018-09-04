@@ -2,14 +2,37 @@
  * @namespace components/conversations/conversation-view
  */
 
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'utils/prop-types';
 
-const ConversationView = ({conversation, ...props}) => {
+class ConversationView extends Component {
+  
+  constructor(props) {
+    super(props);
 
-  return (
-    <div>Hello World</div>
-  )
+    this.scrollToBottom = this.scrollToBottom.bind(this);
+  }
+
+  scrollToBottom() {
+    if(this.pageEnd === undefined) {
+      return;
+    }
+    this.pageEnd.scrollIntoView({ behavior: "smooth" });
+  }
+
+  componentDidMount() {
+    //Give it some delay to avoid race conditions
+    setTimeout(this.scrollToBottom,1000);
+  }
+
+  render() {
+    return (
+      <div className="conversation-view">
+        <div ref={(el) => { this.pageEnd = el; }}></div>
+      </div>
+    )
+  }
+
 }
 
 ConversationView.propTypes = {
