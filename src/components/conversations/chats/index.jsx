@@ -28,6 +28,11 @@ class chats extends Component {
     setTimeout(this.scrollToBottom,1000);
   }
 
+  componentDidUpdate() {
+    //Give it some delay to avoid race conditions
+    setTimeout(this.scrollToBottom,1000);
+  }
+
   render() {
     const renderChats = () => {
       if(this.props.chats) {

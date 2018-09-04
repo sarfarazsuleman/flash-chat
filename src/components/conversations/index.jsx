@@ -33,6 +33,7 @@ class Conversations extends Component {
         {(this.state.current !== null)?(
           <ConversationView 
             conversation={this.props.conversations[this.state.current]}
+            idx={this.state.current}
           />
         ):null}
       </div>

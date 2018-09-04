@@ -7,17 +7,27 @@
  */
 
 export const CHAT_CONVERSATION_ADD = 'CHAT_CONVERSATION_ADD';
+export const CHAT_MESSAGE_ADD = 'CHAT_MESSAGE_ADD';
 
 const initialState = {
   conversations: []
 }
 
 export default (state = initialState, action) => {
+
+  let conversations = state.conversations;
+  
   switch(action.type) {
     case CHAT_CONVERSATION_ADD:
-
-      let conversations = state.conversations;
       conversations.push(action.payload);
+
+      return {
+        ...state,
+        conversations
+      }
+
+    case CHAT_MESSAGE_ADD: 
+      conversations[action.idx].chats.push(action.payload);
 
       return {
         ...state,
@@ -50,4 +60,26 @@ export const addConversation = (name, status='pending', chats=[]) => {
     return new Promise(PromiseFN)
   }
 
+}
+
+export const addChat = (idx, message, direction) => {
+
+  return dispatch => {
+
+    let chat = {
+      message,
+      direction,
+      timestamp:'timestamp'
+    }
+
+    const PromiseFN = (resolve, reject) => {
+      dispatch({
+        type: CHAT_MESSAGE_ADD,
+        idx,
+        payload: chat
+      });
+      resolve();
+    }
+    return new Promise(PromiseFN)
+  }
 }

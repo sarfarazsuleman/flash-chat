@@ -8,6 +8,9 @@ import React, { Component } from 'react';
 import PropTypes from 'utils/prop-types';
 import Chats from 'components/conversations/chats';
 import FormInput from 'components/forms/input';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { addChat } from 'components/conversations/module';
 
 class ConversationView extends Component {
 
@@ -29,7 +32,7 @@ class ConversationView extends Component {
   handleSubmit(e) {
     e.preventDefault();
 
-    console.log('submitting...');
+    this.props.addChat(this.props.idx, this.state.message, 'sent').then(_=>this.setState({message:''}))
   }
 
   render() {
@@ -58,4 +61,10 @@ ConversationView.propTypes = {
   conversation: PropTypes.conversation,
 }
 
-export default ConversationView;
+const mapStateToProps = (state, props) => ({})
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+  addChat,
+}, dispatch)
+
+export default connect(mapStateToProps,mapDispatchToProps)(ConversationView);
