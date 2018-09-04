@@ -10,6 +10,8 @@ import Randomiser from 'utils/randomizer';
 
 export const CHAT_CONVERSATION_ADD = 'CHAT_CONVERSATION_ADD';
 export const CHAT_MESSAGE_ADD = 'CHAT_MESSAGE_ADD';
+export const CHAT_MESSAGE_APROVE = 'CHAT_MESSAGE_APROVE';
+export const CHAT_MESSAGE_DECLINE = 'CHAT_MESSAGE_DECLINE';
 
 const initialState = {
   conversations: []
@@ -30,6 +32,23 @@ export default (state = initialState, action) => {
 
     case CHAT_MESSAGE_ADD: 
       conversations[action.idx].chats.push(action.payload);
+
+      return {
+        ...state,
+        conversations
+      }
+
+    case CHAT_MESSAGE_APROVE:
+      conversations[action.idx].status = 'active';
+
+      return {
+        ...state,
+        conversations
+      }
+
+    case CHAT_MESSAGE_DECLINE:
+      conversations = conversations.splice(action.idx,1);
+      console.log(conversations.splice(action.idx,1));
 
       return {
         ...state,
@@ -92,6 +111,35 @@ export const addChat = (idx, message) => {
         type: CHAT_MESSAGE_ADD,
         idx,
         payload: reply
+      });
+      resolve();
+    }
+    return new Promise(PromiseFN)
+  }
+}
+
+export const approveChat = (idx) => {
+
+  return dispatch => {
+
+    const PromiseFN = (resolve, reject) => {
+      dispatch({
+        type: CHAT_MESSAGE_APROVE,
+        idx,
+      });
+      resolve();
+    }
+    return new Promise(PromiseFN)
+  }
+}
+
+export const declineChat = (idx) => {
+  return dispatch => {
+
+    const PromiseFN = (resolve, reject) => {
+      dispatch({
+        type: CHAT_MESSAGE_DECLINE,
+        idx,
       });
       resolve();
     }
